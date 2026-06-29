@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import {
   ArrowRight,
   BookOpen,
@@ -15,6 +15,10 @@ import {
 } from 'lucide-react'
 import { evidenceItems } from './data/evidence'
 import './App.css'
+
+const visibleEvidenceItems = evidenceItems.filter(
+  (item) => !item.sourcePath.toLowerCase().includes('promotievideo hbo ai.mp4'),
+)
 
 const phaseCopy = [
   {
@@ -89,12 +93,12 @@ const phaseCopy = [
     id: 'result',
     label: 'Resultaten',
     kicker: 'Opleveren',
-    title: 'Eindpresentatie, video en verzameld bewijs vormen het resultaat',
+    title: 'Eindpresentatie, prototypes en verzameld bewijs vormen het resultaat',
     summary:
-      'Het eindresultaat bestaat uit de projectpresentatie, het websiteprototype, testresultaten, analyses en een korte AI-promotievideo. Samen laten ze zien hoe het project van probleem naar oplossing is gegaan.',
+      'Het eindresultaat bestaat uit de projectpresentatie, het websiteprototype, testresultaten en analyses. Samen laten ze zien hoe het project van probleem naar oplossing is gegaan.',
     bullets: [
       'De volledige projectpresentatie geeft de rode draad van het project weer.',
-      'De promotievideo is een extra visual uit de lessen en laat een mogelijke communicatiestijl zien.',
+      'De prototypevideo’s laten zien hoe de website-oplossing na feedback is uitgewerkt.',
       'Reflectie: prototype bouwen, testen en ideeen filteren ging goed; eerder feedback vragen kon beter.',
     ],
   },
@@ -200,9 +204,9 @@ const methodNotes = [
   },
   {
     phase: 'Resultaat',
-    title: 'Excel-grafieken, presentaties en video',
+    title: 'Excel-grafieken, presentaties en prototypebewijs',
     why:
-      'Interview- en enqueteresultaten zijn in Excel gezet zodat ze makkelijker gedeeld en visueler gemaakt konden worden. De presentaties vatten de voortgang samen en de AI-video was een extra visuele promotie-oefening.',
+      'Interview- en enqueteresultaten zijn in Excel gezet zodat ze makkelijker gedeeld en visueler gemaakt konden worden. De presentaties vatten de voortgang samen en de prototypebestanden laten zien wat er uiteindelijk is opgeleverd.',
     result:
       'Samen vormen deze bestanden het bewijs voor onderzoek, keuzes, resultaten en communicatie van het project.',
   },
@@ -237,7 +241,7 @@ const requirementAudit = [
     title: 'Resultaten',
     status: 'Voldoet',
     proof:
-      'Prototypevideo’s, feedbackbestanden, eindpresentatie, force-fieldanalyse, investeringsselectie en promotievideo zijn zichtbaar of downloadbaar.',
+      'Prototypevideo’s, feedbackbestanden, eindpresentatie, force-fieldanalyse en investeringsselectie zijn zichtbaar of downloadbaar.',
   },
   {
     title: 'Verantwoording: beslissingen en onderbouwingen',
@@ -375,8 +379,14 @@ function PreviewModal({ item, onClose }) {
   })()
 
   return (
-    <div className="modal-backdrop" role="dialog" aria-modal="true" aria-label="Bestand bekijken">
-      <div className="modal">
+    <div
+      className="modal-backdrop"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Bestand bekijken"
+      onMouseDown={onClose}
+    >
+      <div className="modal" onMouseDown={(event) => event.stopPropagation()}>
         <div className="modal-header">
           <div>
             <p className="eyebrow">{kindLabels[item.kind] || 'Bestand'}</p>
@@ -407,9 +417,27 @@ export default function App() {
   const [query, setQuery] = useState('')
   const [selected, setSelected] = useState(null)
 
+  useEffect(() => {
+    if (!selected) return undefined
+
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+
+    function closeOnEscape(event) {
+      if (event.key === 'Escape') setSelected(null)
+    }
+
+    window.addEventListener('keydown', closeOnEscape)
+
+    return () => {
+      document.body.style.overflow = previousOverflow
+      window.removeEventListener('keydown', closeOnEscape)
+    }
+  }, [selected])
+
   const filteredItems = useMemo(() => {
     const normalized = query.trim().toLowerCase()
-    return evidenceItems.filter((item) => {
+    return visibleEvidenceItems.filter((item) => {
       const phaseMatch = activePhase === 'all' || item.phase === activePhase
       const searchMatch =
         !normalized ||
@@ -418,7 +446,7 @@ export default function App() {
     })
   }, [activePhase, query])
 
-  const prototypeLinks = evidenceItems.find((item) =>
+  const prototypeLinks = visibleEvidenceItems.find((item) =>
     item.sourcePath.includes('links naar videos'),
   )
 
@@ -496,7 +524,7 @@ export default function App() {
           </div>
           <div className="timeline">
             {phaseCopy.map((phase, index) => {
-              const count = evidenceItems.filter((item) => item.phase === phase.id).length
+              const count = visibleEvidenceItems.filter((item) => item.phase === phase.id).length
               return (
                 <article key={phase.id} id={phase.id}>
                   <div className="timeline-index">{index + 1}</div>
@@ -671,7 +699,7 @@ export default function App() {
             </label>
           </div>
 
-          <div className="count-line">{filteredItems.length} van {evidenceItems.length} bestanden zichtbaar</div>
+          <div className="count-line">{filteredItems.length} van {visibleEvidenceItems.length} bestanden zichtbaar</div>
 
           <div className="evidence-grid">
             {filteredItems.map((item) => (
