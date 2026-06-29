@@ -449,6 +449,15 @@ export default function App() {
   const prototypeLinks = visibleEvidenceItems.find((item) =>
     item.sourcePath.includes('links naar videos'),
   )
+  const prototypeVideoLinks = prototypeLinks
+    ? tidy(prototypeLinks.text)
+        .split('\n')
+        .filter(Boolean)
+        .map((line) => {
+          const [, label, href] = line.match(/(prototype\s+\d):\s+(.*)/i) || []
+          return { href: href || '#', label: label || line }
+        })
+    : []
 
   function showPhaseEvidence(phaseId) {
     setActivePhase(phaseId)
@@ -540,6 +549,17 @@ export default function App() {
                         <li key={bullet}>{bullet}</li>
                       ))}
                     </ul>
+                    {phase.id === 'result' && prototypeVideoLinks.length > 0 && (
+                      <div className="prototype-links inline-prototype-links">
+                        <h3>Prototypevideo's</h3>
+                        {prototypeVideoLinks.map((link) => (
+                          <a key={link.label} href={link.href} target="_blank" rel="noreferrer">
+                            <PlayCircle size={17} aria-hidden="true" />
+                            {link.label}
+                          </a>
+                        ))}
+                      </div>
+                    )}
                     <button type="button" onClick={() => showPhaseEvidence(phase.id)}>
                       Toon {count} bewijsstukken
                     </button>
@@ -616,23 +636,6 @@ export default function App() {
               </p>
             </article>
           </div>
-          {prototypeLinks && (
-            <div className="prototype-links">
-              <h3>Prototypevideo's</h3>
-              {tidy(prototypeLinks.text)
-                .split('\n')
-                .filter(Boolean)
-                .map((line) => {
-                  const [, label, href] = line.match(/(prototype\s+\d):\s+(.*)/i) || []
-                  return (
-                    <a key={line} href={href || '#'} target="_blank" rel="noreferrer">
-                      <PlayCircle size={17} aria-hidden="true" />
-                      {label || line}
-                    </a>
-                  )
-                })}
-            </div>
-          )}
         </section>
 
         <section id="minimumvereisten" className="audit-section">

@@ -332,6 +332,10 @@ footer p {
   background: white;
 }
 
+.inline-prototype-links {
+  margin-bottom: 16px;
+}
+
 .audit-section {
   background: #111827;
 }
