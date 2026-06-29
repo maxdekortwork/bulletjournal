@@ -416,6 +416,7 @@ export default function App() {
   const [activePhase, setActivePhase] = useState('all')
   const [query, setQuery] = useState('')
   const [selected, setSelected] = useState(null)
+  const [visibleCount, setVisibleCount] = useState(12)
 
   useEffect(() => {
     if (!selected) return undefined
@@ -445,6 +446,8 @@ export default function App() {
       return phaseMatch && searchMatch
     })
   }, [activePhase, query])
+  const displayedItems = filteredItems.slice(0, visibleCount)
+  const hasMoreItems = displayedItems.length < filteredItems.length
 
   const prototypeLinks = visibleEvidenceItems.find((item) =>
     item.sourcePath.includes('links naar videos'),
@@ -462,9 +465,15 @@ export default function App() {
   function showPhaseEvidence(phaseId) {
     setActivePhase(phaseId)
     setQuery('')
+    setVisibleCount(12)
     window.requestAnimationFrame(() => {
       document.getElementById('bewijs')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
     })
+  }
+
+  function updatePhaseFilter(phaseId) {
+    setActivePhase(phaseId)
+    setVisibleCount(12)
   }
 
   return (
@@ -676,7 +685,7 @@ export default function App() {
               <button
                 type="button"
                 className={activePhase === 'all' ? 'active' : ''}
-                onClick={() => setActivePhase('all')}
+                onClick={() => updatePhaseFilter('all')}
               >
                 Alles
               </button>
@@ -685,7 +694,7 @@ export default function App() {
                   key={phase.id}
                   type="button"
                   className={activePhase === phase.id ? 'active' : ''}
-                  onClick={() => setActivePhase(phase.id)}
+                  onClick={() => updatePhaseFilter(phase.id)}
                 >
                   {phase.label}
                 </button>
@@ -696,19 +705,38 @@ export default function App() {
               <span className="sr-only">Zoeken in bewijs</span>
               <input
                 value={query}
-                onChange={(event) => setQuery(event.target.value)}
+                onChange={(event) => {
+                  setQuery(event.target.value)
+                  setVisibleCount(12)
+                }}
                 placeholder="Zoek op bestand, fase of inhoud"
               />
             </label>
           </div>
 
-          <div className="count-line">{filteredItems.length} van {visibleEvidenceItems.length} bestanden zichtbaar</div>
+          <div className="count-line">
+            {displayedItems.length} van {filteredItems.length} gefilterde bestanden zichtbaar
+            {filteredItems.length !== visibleEvidenceItems.length
+              ? ` (${visibleEvidenceItems.length} totaal)`
+              : ''}
+          </div>
 
           <div className="evidence-grid">
-            {filteredItems.map((item) => (
+            {displayedItems.map((item) => (
               <EvidenceCard key={item.id} item={item} onOpen={setSelected} />
             ))}
           </div>
+
+          {hasMoreItems && (
+            <div className="load-more-row">
+              <button
+                type="button"
+                onClick={() => setVisibleCount((current) => current + 12)}
+              >
+                Toon meer bewijsstukken
+              </button>
+            </div>
+          )}
         </section>
       </main>
 
