@@ -72,14 +72,16 @@ const phaseCopy = [
   },
   {
     id: 'prototype',
-    label: 'Prototype & Test',
+    label: 'Prototype',
     kicker: 'Maken en verbeteren',
     title: 'Een hifi websiteprototype getest, aangepast en opnieuw onderbouwd',
     summary:
-      'We kozen bewust voor een hifi prototype, zodat testers de verbeterde website echt konden ervaren. Feedback uit Forms, docenten en medestudenten is gebruikt voor prototype 2 en voor de force-fieldanalyse.',
+      'We kozen bewust voor een hifi prototype, zodat testers de verbeterde website echt konden ervaren. Na feedback op prototype 1 hebben we prototype 2 concreet aangepast met extra verhalen, video, meer visuals en representatiever beeldmateriaal.',
     bullets: [
       'Prototype 1 en 2 zijn gekoppeld via YouTube-links en onderbouwd met feedbackbestanden.',
-      'Feedback leidde tot iteraties in structuur, taal, visuele uitleg en duidelijkheid van functies.',
+      'Na prototype 1 voegden we Instagram-verhalen toe bij de opbouw van de studie, zodat potentiele studenten beter zien hoe de studie en projectgroepen eruitzien.',
+      'Bovenaan kwam een knop naar de video en onderaan kwam een extra video over TB voor bezoekers die de pagina hadden bekeken.',
+      'De pagina is visueler gemaakt en er zijn vrouwen toegevoegd in afbeeldingen, zodat de opleiding minder eenzijdig overkomt.',
       'Investeringsselectie en force-fieldanalyse verbinden het prototype met haalbaarheid en verandering.',
     ],
   },
@@ -186,7 +188,7 @@ const methodNotes = [
     why:
       'We kozen voor een hifi prototype omdat een website pas goed te testen is als iemand hem echt kan ervaren. Alleen losse plaatjes zouden minder duidelijk zijn en sneller rommelig overkomen.',
     result:
-      'Prototype 1 gaf meteen bruikbare reacties. Daarna is prototype 2 aangepast op basis van feedback uit Forms, medestudenten en docenten.',
+      'Prototype 1 gaf bruikbare feedback. In prototype 2 voegden we Instagram-verhalen over studieopbouw en projectgroepen toe, een videoknop bovenaan, een extra TB-video onderaan, meer visuals en meer vrouwen in het beeldmateriaal.',
   },
   {
     phase: 'Test',
@@ -247,7 +249,7 @@ const requirementAudit = [
     title: 'Iteraties',
     status: 'Voldoet',
     proof:
-      'De overgang van onepager/roadmap-idee naar compacte website en van prototype 1 naar prototype 2 staat beschreven.',
+      'De overgang van onepager/roadmap-idee naar compacte website en van prototype 1 naar prototype 2 staat beschreven, inclusief Instagram-verhalen, videoknoppen, extra TB-video, visuals en inclusiever beeldmateriaal.',
   },
   {
     title: 'Reflecties',
@@ -499,7 +501,10 @@ export default function App() {
                 <article key={phase.id} id={phase.id}>
                   <div className="timeline-index">{index + 1}</div>
                   <div className="timeline-content">
-                    <p className="eyebrow">{phase.kicker}</p>
+                    <div className="phase-heading">
+                      <span>{phase.label}</span>
+                      <p className="eyebrow">{phase.kicker}</p>
+                    </div>
                     <h2>{phase.title}</h2>
                     <p>{phase.summary}</p>
                     <ul>
@@ -568,9 +573,11 @@ export default function App() {
             <article>
               <h3>Wat veranderde na feedback?</h3>
               <p>
-                Uit testfeedback kwam dat duidelijkheid, eenvoudige taal, visuals en bruikbare
-                functies belangrijk waren. Daarom is prototype 2 aangescherpt op structuur,
-                uitleg en informatie die echt helpt bij kiezen.
+                Uit testfeedback kwam dat potentiele studenten meer gevoel bij de studie wilden
+                krijgen. Daarom voegden we Instagram-verhalen toe over de opbouw van de studie en
+                projectgroepen, een videoknop bovenaan, een extra TB-video onderaan en meer visuals.
+                Ook voegden we vrouwen toe in de afbeeldingen, zodat de pagina herkenbaarder en
+                minder eenzijdig werd.
               </p>
             </article>
             <article>
