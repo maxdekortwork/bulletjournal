@@ -26,12 +26,19 @@
 
 html {
   scroll-behavior: smooth;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
 }
 
 body {
   margin: 0;
   min-width: 320px;
+  width: 100%;
+  max-width: 100%;
+  min-height: 100svh;
   background: var(--page);
+  overflow-x: clip;
 }
 
 button,
@@ -56,5 +63,10 @@ a {
 }
 
 #root {
+  display: flex;
+  flex-direction: column;
   min-height: 100svh;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
 }
