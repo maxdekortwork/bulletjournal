@@ -47,13 +47,14 @@ const phaseCopy = [
     id: 'define',
     label: 'Define',
     kicker: 'Scherpstellen',
-    title: 'De kern werd: inhoud duidelijk maken in plaats van alleen promoten',
+    title: 'Van losse onderzoeksinzichten naar een scherpe HKW-vraag',
     summary:
-      'Na onderzoek is de richting aangescherpt naar betere uitleg van de studie-inhoud. De customer journey en designprincipes lieten zien waar een potentiele student behoefte heeft aan herkenbare voorbeelden, eenvoudige taal en overzicht.',
+      'In de define fase hebben we de inzichten uit interviews, enquete, persona, empathy map en stakeholdermatrix kleiner gemaakt. Eerst zagen we meerdere mogelijke problemen, zoals het Fontys-imago, weinig zichtbaarheid via social media en onduidelijkheid over de studie-inhoud. Via de probleemkluwen en roadmap werd duidelijk dat wij vooral invloed konden hebben op hoe TB Tilburg wordt uitgelegd aan toekomstige studenten.',
     bullets: [
-      'HKW-vraag uitgewerkt rondom duidelijkheid, aantrekkelijkheid en bewuste studiekeuze.',
-      'Customer journey gebruikt om frictiepunten op de route naar aanmelden zichtbaar te maken.',
-      'Designprincipes opgesteld voor een betere informatie-ervaring op de Fontys TB-pagina.',
+      'De probleemkluwen hielp om oorzaken en gevolgen te scheiden: niet alleen weinig instroom, maar vooral onduidelijk beeld van wat TB inhoudt.',
+      'Met de roadmap kozen we voor studie-inhoud duidelijker maken, omdat Fontys-imago groter en minder haalbaar was en social media vooral een kanaal is.',
+      'Daaruit ontstond de HKW-vraag: hoe kunnen we de studie-inhoud van TB Tilburg duidelijker en aantrekkelijker overbrengen, zodat toekomstige studenten een bewustere studiekeuze kunnen maken?',
+      'Customer journey en designprincipes vertaalden de HKW-vraag naar eisen voor de oplossing: korte taal, concrete voorbeelden, herkenbare visuals en overzicht.',
     ],
   },
   {
