@@ -579,27 +579,6 @@ footer p {
   min-width: 0;
 }
 
-.load-more-row {
-  display: flex;
-  justify-content: center;
-  margin-top: 22px;
-}
-
-.load-more-row button {
-  min-height: 42px;
-  border: 1px solid var(--ink);
-  border-radius: 7px;
-  background: var(--ink);
-  color: white;
-  padding: 0 18px;
-  font: inherit;
-  cursor: pointer;
-}
-
-.load-more-row button:hover {
-  background: #263244;
-}
-
 .modal-backdrop {
   position: fixed;
   inset: 0;
