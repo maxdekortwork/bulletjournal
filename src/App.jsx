@@ -420,6 +420,14 @@ export default function App() {
     item.sourcePath.includes('links naar videos'),
   )
 
+  function showPhaseEvidence(phaseId) {
+    setActivePhase(phaseId)
+    setQuery('')
+    window.requestAnimationFrame(() => {
+      document.getElementById('bewijs')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    })
+  }
+
   return (
     <>
       <header className="site-header">
@@ -499,7 +507,7 @@ export default function App() {
                         <li key={bullet}>{bullet}</li>
                       ))}
                     </ul>
-                    <button type="button" onClick={() => setActivePhase(phase.id)}>
+                    <button type="button" onClick={() => showPhaseEvidence(phase.id)}>
                       Toon {count} bewijsstukken
                     </button>
                   </div>
